@@ -1,7 +1,3 @@
-from multiprocessing import Value
-
-from reference_boards import tung34, tung43
-
 class Board:
     def __init__(self, x, y):
         try:
@@ -21,13 +17,27 @@ class Board:
     def __repr__(self):
         return str(self.board)
 
-board1 = Board(4,3)
-board2 = Board(3,4)
+class Ships:
+    class Vessel:
+        def __init__(self, length, id):
+            self.length = length
+            self.id = id
+            self.hits = 0
+            self.position = [0,0] #Position is always defined by the upper left most portion of the ship.
+            self.orientation = "Horizontal"
+        def __repr__(self):
+            return self.id
 
-testboard = Board(1,1)
-print(testboard)
+    def __init__(self, ships):
+        self.ships = []
+        for ship_group in ships:
+            for ship in range(ship_group[1]):
+                self.ships.append(Ships.Vessel(ship_group[0],f"len{ship_group[0]}num{ship+1}"))
+    def __repr__(self):
+        toreturn = []
+        for ship in self.ships:
+            toreturn.append(ship.id)
+        return str(toreturn)
 
-if repr(board1) == repr(tung43):
-    print("Test pass")
-if repr(board2) == repr(tung34):
-    print("Test pass")
+game_ships = Ships(([1,3],[2,7],[4,4]))
+print(repr(game_ships))
