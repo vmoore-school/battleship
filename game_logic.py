@@ -1,11 +1,7 @@
-from argparse import Namespace
-
-
 class Board:
     def __init__(self, x, y):
         try:
-            int(x)
-            int(y)
+            x, y = int(x), int(y)
         except:
             raise ValueError
         if x <= 0 or y <=0:
@@ -54,10 +50,11 @@ class Player(Ships, Board):
     def __init__(self, name, id, ships, board): #Name is not expected to be unique. ID is.
         self.name = name
         self.id = id
-        self.ships =
-        self.board = Board()
+        self.fleet = Ships(ships)
+        self.board = Board(*board)
 
+default_board_size = (10,10)
+default_fleet = ((2,1), (3,2), (4,1), (5,1))
 
-
-game_ships = Ships(([1,3],[2,7],[4,4]))
-print(repr(game_ships))
+player1 = Player("Player 1", 1, default_fleet, default_board_size)
+print(player1.fleet)
