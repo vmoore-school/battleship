@@ -13,8 +13,20 @@ class Board:
         for row in range(y):
             for column in range(x):
                 self.board[column].append([False,False])
+
     def __repr__(self):
         return str(self.board)
+
+    def bomb(self, pos):
+        if pos[0] <= self.bounds[0] and pos[1] <= self.bounds[1]:
+            pass
+        else:
+            raise ValueError(f"Attempting to update a tile on a board must be within the board's bounds ({self.bounds[0]},{self.bounds[1]}).")
+        self.board[pos[0]][pos[1]][1] = True
+        if self.board[pos[0]][pos[1]][0] != False:
+            return True
+        else:
+            return False
 
 
 
