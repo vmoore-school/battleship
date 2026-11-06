@@ -1,4 +1,16 @@
 class Board:
+    """
+    This is where the board state for each player is stored. The layout works like this (3x3 board for example):
+        [
+        [[False,False],[False,False],[False,False]],
+        [[False,False],[False,False],[False,False]],
+        [[False,False],[False,False],[False,False]]
+        ]
+
+        !!! VERY IMPORTANT NOTE !!!
+        THE BOARD IS ROTATED 90 DEGREES CLOCKWISE COMPARED TO HOW IT IS VISUALLY REPRESENTED ABOVE!
+        REFERENCE IT AS IF IT IS NOT.
+    """
     def __init__(self, x, y):
         try:
             x, y = int(x), int(y)
@@ -27,7 +39,6 @@ class Board:
             return True
         else:
             return False
-
 
 
 class Ships:
