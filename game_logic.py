@@ -6,7 +6,7 @@ class Board:
             raise ValueError
         if x <= 0 or y <=0:
             raise ValueError
-
+        self.bounds = (x, y)
         self.board = []
         for column in range(x):
             self.board.append([])
@@ -16,28 +16,32 @@ class Board:
     def __repr__(self):
         return str(self.board)
 
+
+
 class Ships:
     class Vessel:
         def __init__(self, length, id):
             self.length = length
             self.id = id #Not defined here, but a ship name is len (its length) num (its number of that length), so the second 4 length ship on a fleet would be len4num2
             self.hits = 0
-            self.position = [0,0] #Position is always defined by the upper left most portion of the ship.
-            self.orientation = "Horizontal"
+            self.position = [-1,-1] #Position is always defined by the upper left most portion of the ship.
+            self.orientation = "H"
+
+        def place(self):
+            pass
+
         def __repr__(self):
             return self.id
 
     def __init__(self, ships):
-        self.ships = []
+        self.ships = {}
         for ship_group in ships:
             for ship in range(ship_group[1]):
-                self.ships.append(Ships.Vessel(ship_group[0],f"len{ship_group[0]}num{ship+1}"))
+                self.ships.update({f"len{ship_group[0]}num{ship+1}":Ships.Vessel(ship_group[0],f"len{ship_group[0]}num{ship+1}")})
 
     def __repr__(self):
-        toreturn = []
-        for ship in self.ships:
-            toreturn.append(ship.id)
-        return str(toreturn)
+        return str(list(self.ships))
+
 
 class Player(Ships, Board):
     """
@@ -53,8 +57,24 @@ class Player(Ships, Board):
         self.fleet = Ships(ships)
         self.board = Board(*board)
 
+    def place_ship(self, id, pos, orientation):
+        if id in list(self.fleet.ships):
+            pass
+        else:
+            return (False, "Ship not in fleet.")
+        if orientation == "H":
+
+
+
+
+
+
+
+
 default_board_size = (10,10)
 default_fleet = ((2,1), (3,2), (4,1), (5,1))
 
 player1 = Player("Player 1", 1, default_fleet, default_board_size)
 print(player1.fleet)
+while True:
+    ship_to_place = input(": ")
