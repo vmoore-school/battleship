@@ -16,7 +16,7 @@ class Board:
             x, y = int(x), int(y)
         except:
             raise ValueError
-        if x <= 0 or y <=0:
+        if x < 3 or x > 20 or y < 3 or y > 20:
             raise ValueError
         self.bounds = (x, y)
         self.board = []
@@ -39,6 +39,9 @@ class Board:
             return True
         else:
             return False
+
+    def place_ship(self, id, pos):
+        pass
 
 
 class Ships:
@@ -86,15 +89,10 @@ class Player(Ships, Board):
         else:
             return (False, "Ship not in fleet.")
         if orientation == "H":
+            pass
 
 
-
-
-
-
-
-
-default_board_size = (10,10)
+default_board_size = (1,1)
 default_fleet = ((2,1), (3,2), (4,1), (5,1))
 
 player1 = Player("Player 1", 1, default_fleet, default_board_size)
