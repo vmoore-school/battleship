@@ -1,3 +1,6 @@
+from tokenize import triple_quoted
+
+
 class Board:
     """
     This is where the board state for each player is stored. The layout works like this (3x3 board for example):
@@ -40,9 +43,6 @@ class Board:
         else:
             return False
 
-    def place_ship(self, id, pos):
-        pass
-
 
 class Ships:
     class Vessel:
@@ -50,9 +50,7 @@ class Ships:
             self.length = length
             self.id = id #Not defined here, but a ship name is len (its length) num (its number of that length), so the second 4 length ship on a fleet would be len4num2
             self.hits = 0
-
-        def place(self):
-            pass
+            self.sunk = False
 
         def __repr__(self):
             return self.id
@@ -86,16 +84,39 @@ class Player(Ships, Board):
             pass
         else:
             return (False, "Ship not in fleet.")
+
         if orientation == "H":
-            for x in range(self.fleet.ships[id].length):
+            for segment in range(self.fleet.ships[id].length):
+                print(f"Segment {segment}")
+                if self.board.board[pos[0]+segment][pos[1]][0] == False:
+                    self.board.board[pos[0]+segment][pos[1]][0] = id
+                else:
+                    return False
+
+        if orientation == "V":
+            for segment in range(self.fleet.ships[id].length):
+                print(f"Segment {segment}")
+                if self.board.board[pos[0]][pos[1]+segment][0] == False:
+                    self.board.board[pos[0]][pos[1]+segment][0] = id
+                else:
+                    return False
+
+        return True
 
 
 
-
-default_board_size = (1,1)
+default_board_size = (10,10)
 default_fleet = ((2,1), (3,2), (4,1), (5,1))
 
 player1 = Player("Player 1", 1, default_fleet, default_board_size)
 print(player1.fleet)
 while True:
-    ship_to_place = input(": ")
+    posx_to_place = input("Input position (x) to place: ")
+    posy_to_place = input("Input position (y) to place: ")
+    orient_to_place = input("Input orientation to place: ")
+    id_to_place = input("Input id to place: ")
+    tung = player1.place_ship(id_to_place, (int(posx_to_place),int(posy_to_place)), orient_to_place)
+    if tung:
+        print("Sahur")
+    if not tung:
+        print("I'm finished man")
