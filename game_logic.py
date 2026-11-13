@@ -50,8 +50,6 @@ class Ships:
             self.length = length
             self.id = id #Not defined here, but a ship name is len (its length) num (its number of that length), so the second 4 length ship on a fleet would be len4num2
             self.hits = 0
-            self.position = [-1,-1] #Position is always defined by the upper left most portion of the ship.
-            self.orientation = "H"
 
         def place(self):
             pass
@@ -89,7 +87,9 @@ class Player(Ships, Board):
         else:
             return (False, "Ship not in fleet.")
         if orientation == "H":
-            pass
+            for x in range(self.fleet.ships[id].length):
+
+
 
 
 default_board_size = (1,1)
