@@ -1,4 +1,3 @@
-from tokenize import triple_quoted
 
 
 class Board:
@@ -50,7 +49,17 @@ class Ships:
             self.length = length
             self.id = id #Not defined here, but a ship name is len (its length) num (its number of that length), so the second 4 length ship on a fleet would be len4num2
             self.hits = 0
+            self.pos = [None,None]
+            self.orientation = None
             self.sunk = False
+
+        def damage(self, damage_taken):
+            self.hits += 1
+            if self.hits >= self.length:
+                self.sunk = True
+                return True
+            else:
+                return False
 
         def __repr__(self):
             return self.id
@@ -60,6 +69,16 @@ class Ships:
         for ship_group in ships:
             for ship in range(ship_group[1]):
                 self.ships.update({f"len{ship_group[0]}num{ship+1}":Ships.Vessel(ship_group[0],f"len{ship_group[0]}num{ship+1}")})
+
+    def is_fleet_alive(self):
+        sunk_ships = 0
+        for ship in list(self.ships):
+            if ship.sunk:
+                sunk_ships += 1
+        if sunk_ships >= len(list(self.ships)):
+            return False
+        else:
+            return True
 
     def __repr__(self):
         return str(list(self.ships))
@@ -90,6 +109,7 @@ class Player(Ships, Board):
                 print(f"Segment {segment}")
                 if self.board.board[pos[0]+segment][pos[1]][0] == False:
                     self.board.board[pos[0]+segment][pos[1]][0] = id
+                    self.fleet.ships[id].pos, self.fleet.ships[id].orientation = pos, orientation
                 else:
                     return False
 
@@ -98,6 +118,7 @@ class Player(Ships, Board):
                 print(f"Segment {segment}")
                 if self.board.board[pos[0]][pos[1]+segment][0] == False:
                     self.board.board[pos[0]][pos[1]+segment][0] = id
+                    self.fleet.ships[id].pos, self.fleet.ships[id].orientation = pos, orientation
                 else:
                     return False
 
@@ -120,3 +141,5 @@ while True:
         print("Sahur")
     if not tung:
         print("I'm finished man")
+    else:
+        print()
