@@ -38,6 +38,7 @@ class Board:
             raise ValueError(f"Attempting to update a tile on a board must be within the board's bounds ({self.bounds[0]},{self.bounds[1]}).")
         self.board[pos[0]][pos[1]][1] = True
         if self.board[pos[0]][pos[1]][0] != False:
+            self.board[pos[0]][pos[1]][0].ships.damage(1)
             return True
         else:
             return False
@@ -129,17 +130,21 @@ class Player(Ships, Board):
 default_board_size = (10,10)
 default_fleet = ((2,1), (3,2), (4,1), (5,1))
 
+# player1 = Player("Player 1", 1, default_fleet, default_board_size)
+# print(player1.fleet)
+# while True:
+#     posx_to_place = input("Input position (x) to place: ")
+#     posy_to_place = input("Input position (y) to place: ")
+#     orient_to_place = input("Input orientation to place: ")
+#     id_to_place = input("Input id to place: ")
+#     tung = player1.place_ship(id_to_place, (int(posx_to_place),int(posy_to_place)), orient_to_place)
+#     if tung:
+#         print("Sahur")
+#     if not tung:
+#         print("I'm finished man")
+#     else:
+#         print()
+
+
 player1 = Player("Player 1", 1, default_fleet, default_board_size)
-print(player1.fleet)
-while True:
-    posx_to_place = input("Input position (x) to place: ")
-    posy_to_place = input("Input position (y) to place: ")
-    orient_to_place = input("Input orientation to place: ")
-    id_to_place = input("Input id to place: ")
-    tung = player1.place_ship(id_to_place, (int(posx_to_place),int(posy_to_place)), orient_to_place)
-    if tung:
-        print("Sahur")
-    if not tung:
-        print("I'm finished man")
-    else:
-        print()
+player2 = Player("Player 2", 2, default_fleet, default_board_size)
